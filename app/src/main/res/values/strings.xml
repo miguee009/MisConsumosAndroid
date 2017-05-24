@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Mis Consumos</string>
+    <string name="ingresos">Agregar Ingresos</string>
+    <string name="gastos">agregar Gastos</string>
+    <string name="mismovimientos">Mis Movimientos</string>
+    <string name="saldo">$ 0</string>
+    <string name="gastostext">$ 0</string>
+    <string name="ingresotext">$ 0</string>
+    <string name="salir">Salir</string>
+    <string name="edittexting">Escribe tu saldo</string>
+</resources>
