@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class Main5Activity extends AppCompatActivity {
 
+    /*Variables a usar*/
     ListView lista;
     String[] valores = new String[]{"Viveres","Diversion","Educacion","Salud","Transporte","Inmueble","Ropa","Personales" +
             "Mascota"};
@@ -19,10 +20,14 @@ public class Main5Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main5);
+
+        /*Usando un adapter y un arreglo de string para poner en funcion nuestra listview*/
         lista = (ListView)findViewById(R.id.listatiposgastos);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,valores);
         lista.setAdapter(adapter);
 
+        /*Metodo onclick que efectua una accion al elegir uno de los elementos de la lista
+        * Al elegir el elemento el string se envia a activity 2 para ser mostrada en el boton de tipo*/
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

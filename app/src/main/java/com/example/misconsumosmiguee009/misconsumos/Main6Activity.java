@@ -8,12 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class Main6Activity extends AppCompatActivity {
+
+    /*Declaracion de variable listview*/
     ListView lista;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main6);
 
+        /*Abrimos la base de datos para leerlos y mostrarlos en una listview*/
         UsuarioSqliteHelper usuario = new UsuarioSqliteHelper(this,"DbUsuario",null,1);
         SQLiteDatabase db = usuario.getReadableDatabase();
         if(db!=null){

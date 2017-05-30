@@ -14,26 +14,29 @@ import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener{
 
+    /*Variables a usar*/
     Button Tipo,Guardar,IrMenu;
-    EditText Montotext;
-    EditText DescripText;
-    String Tipos,Descripcion;
-    String IngOGas;
+    EditText Montotext,DescripText;
+    String Tipos,Descripcion,IngOGas;
     Integer monto;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        /*Asignando id a nuestras variables*/
         Montotext = (EditText) findViewById(R.id.textingresos);
         DescripText = (EditText) findViewById(R.id.descripcion);
         Tipo = (Button) findViewById(R.id.BotonTipo);
         Guardar =(Button)findViewById(R.id.guardaring);
         IrMenu =(Button)findViewById(R.id.IrMenuing);
 
+        /*"Escuchar" botones el efectuar un click*/
         IrMenu.setOnClickListener(this);
         Tipo.setOnClickListener(this);
         Guardar.setOnClickListener(this);
 
+        /*Obtener datos de otra activity*/
         Intent datrecv= getIntent();
         Bundle extra = datrecv.getExtras();
 
@@ -43,7 +46,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
+    /*Metodo onclick usado para ejecutar la funcion de los botones*/
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -52,21 +55,27 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.guardaring:
+
                 Tipos = Tipo.getText().toString();
-                monto = Integer.parseInt(Montotext.getText().toString());
                 Descripcion = DescripText.getText().toString();
                 IngOGas = "Ingreso";
-                if(monto!=null) {
-                    UsuarioSqliteHelper usuario = new UsuarioSqliteHelper(this, "DbUsuario", null, 1);
-                    SQLiteDatabase db = usuario.getWritableDatabase();
-                    db.execSQL("INSERT INTO Usuario(Monto,Tipo,Descripcion,IngOGas) VALUES (" + monto + ",'" + Tipos + "','" + Descripcion + "','" + IngOGas + "')");
-                    db.close();
-                    Toast.makeText(this, "Ingreso Guardado", Toast.LENGTH_LONG).show();
-                    Tipo.setText("ELEGIR TIPO");
-                    Montotext.setText("");
-                    DescripText.setText("");
+
+                if(!Tipos.contentEquals("Elegir Tipo")) {
+                    if(!Montotext.getText().toString().isEmpty()) {
+                        monto = Integer.parseInt(Montotext.getText().toString());
+                        UsuarioSqliteHelper usuario = new UsuarioSqliteHelper(this, "DbUsuario", null, 1);
+                        SQLiteDatabase db = usuario.getWritableDatabase();
+                        db.execSQL("INSERT INTO Usuario(Monto,Tipo,Descripcion,IngOGas) VALUES (" + monto + ",'" + Tipos + "','" + Descripcion + "','" + IngOGas + "')");
+                        db.close();
+                        Toast.makeText(this, "Ingreso Guardado", Toast.LENGTH_LONG).show();
+                        Tipo.setText("Elegir Tipo");
+                        Montotext.setText("");
+                        DescripText.setText("");
+                    }else{
+                        Toast.makeText(this, "Ingresa un Monto!", Toast.LENGTH_LONG).show();
+                    }
                 }else{
-                    Toast.makeText(this, "Ingresa un monto!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Elegi un tipo!", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.IrMenuing:
@@ -76,13 +85,3 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
     }
 }
-
-/* UsuarioSqliteHelper leer = new UsuarioSqliteHelper(this,"DbUsuario",null,1);
-                SQLiteDatabase read = leer.getReadableDatabase();
-                Cursor cursor = read.rawQuery("select * from Usuario",null);
-                /*int cantidad =cursor.getCount();
-                String cants = Integer.toString(cantidad);*0/
-                cursor.moveToFirst();
-                        String asdf = cursor.getString(0);
-                        base.setText(asdf);
-                        read.close();*/

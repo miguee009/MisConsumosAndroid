@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    /*Variables a usar*/
     Button ingreso,gastos,reiniciar,listmov,salir;
     TextView ingtext,gastext,saltext;
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*Asignando id a nuestras variables*/
         ingtext = (TextView)findViewById(R.id.ingresotext);
         gastext = (TextView)findViewById(R.id.gastostext);
         saltext = (TextView)findViewById(R.id.saldo);
@@ -32,12 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listmov = (Button)findViewById(R.id.movimientos);
         salir= (Button)findViewById(R.id.salir);
 
+        /*"Escuchar" botones el efectuar un click*/
         salir.setOnClickListener(this);
         listmov.setOnClickListener(this);
         reiniciar.setOnClickListener(this);
         ingreso.setOnClickListener(this);
         gastos.setOnClickListener(this);
 
+        /*Leer base de datos para setear los valores de ingreso gasto y saldo*/
         UsuarioSqliteHelper usuario = new UsuarioSqliteHelper(this,"DbUsuario",null,1);
         SQLiteDatabase db = usuario.getReadableDatabase();
         if(db!=null){
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             saltext.setText("$ "+Integer.toString(saldo));
         }
     }
-
+    /*Metodo onclick usado para ejecutar la funcion de los botones*/
     @Override
     public void onClick(View v) {
         switch (v.getId()){
